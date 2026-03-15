@@ -1,8 +1,5 @@
 require('dotenv').config();
 
-let app;
-try {
-
 const express = require('express');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
@@ -14,7 +11,7 @@ const exportRoutes = require('./routes/export');
 const errorHandler = require('./middleware/errorHandler');
 const { success } = require('./utils/response');
 
-app = express();
+const app = express();
 
 // Global middleware
 app.use(cors());
@@ -61,13 +58,5 @@ app.use((_req, res) => {
 
 // Error handler
 app.use(errorHandler);
-
-} catch (_initErr) {
-  const express = require('express');
-  app = express();
-  app.use((_req, res) => {
-    res.status(500).json({ initError: _initErr.message, stack: _initErr.stack });
-  });
-}
 
 module.exports = app;
