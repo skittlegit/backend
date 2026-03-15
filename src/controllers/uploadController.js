@@ -1,4 +1,4 @@
-const { v4: uuidv4 } = require('uuid');
+const { randomUUID } = require('crypto');
 const supabase = require('../config/supabase');
 const config = require('../config');
 const { success, error } = require('../utils/response');
@@ -13,7 +13,7 @@ const uploadPhoto = async (req, res, next) => {
     }
 
     const ext = file.mimetype === 'image/png' ? 'png' : 'jpg';
-    const filePath = `photos/temp/${req.user.id}/${uuidv4()}.${ext}`;
+    const filePath = `photos/temp/${req.user.id}/${randomUUID()}.${ext}`;
 
     const { error: uploadError } = await supabase.storage
       .from(config.supabase.bucket)

@@ -1,4 +1,4 @@
-const { v4: uuidv4 } = require('uuid');
+const { randomUUID } = require('crypto');
 const prisma = require('../config/prisma');
 const supabase = require('../config/supabase');
 const config = require('../config');
@@ -9,7 +9,7 @@ const GSTIN_REGEX = /^\d{2}[A-Z]{5}\d{4}[A-Z]\d[A-Z][A-Z\d]$/;
 
 const uploadPhotoToSupabase = async (file, userId) => {
   const ext = file.mimetype === 'image/png' ? 'png' : 'jpg';
-  const filePath = `photos/${userId}/${uuidv4()}.${ext}`;
+  const filePath = `photos/${userId}/${randomUUID()}.${ext}`;
 
   const { error: uploadError } = await supabase.storage
     .from(config.supabase.bucket)
