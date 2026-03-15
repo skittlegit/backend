@@ -1,5 +1,11 @@
 require('dotenv').config();
 
+const required = ['DATABASE_URL', 'JWT_ACCESS_SECRET', 'JWT_REFRESH_SECRET', 'SUPABASE_URL', 'SUPABASE_SERVICE_KEY'];
+const missing = required.filter((k) => !process.env[k]);
+if (missing.length > 0) {
+  throw new Error(`Missing required environment variables: ${missing.join(', ')}`);
+}
+
 module.exports = {
   port: parseInt(process.env.PORT, 10) || 3000,
   nodeEnv: process.env.NODE_ENV || 'development',
@@ -15,3 +21,4 @@ module.exports = {
     bucket: process.env.SUPABASE_BUCKET || 'reccee-photos',
   },
 };
+
